@@ -42,13 +42,13 @@ public class DataController {
 	
 	public void setDialogStage(Stage dialogStage) 
 	{
-        this.dialogStage = dialogStage;
-    }
+    this.dialogStage = dialogStage;
+  }
 	
 	public boolean isOkClicked() 
 	{
-        return okClicked;
-    }
+    return okClicked;
+  }
 	
 	public void setAccount(Account data)
 	{

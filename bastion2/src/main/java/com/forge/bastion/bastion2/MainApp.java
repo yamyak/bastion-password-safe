@@ -25,6 +25,7 @@ public class MainApp extends Application
 		showLoginView();
 	}
 
+  // Initialize the view
 	public void initRootLoader()
 	{
 		try 
@@ -48,12 +49,14 @@ public class MainApp extends Application
 	{
 		try 
 		{
+      // Display the login view
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("LoginView.fxml"));
 			AnchorPane anchor = (AnchorPane) loader.load();
 			
 			rootLayout.setCenter(anchor);
 			
+      // setup the login controller
 			LoginController controller = loader.getController();
 			controller.setMainApp(this);
 		} 
@@ -67,6 +70,7 @@ public class MainApp extends Application
 	{
 		try
 		{
+      // Display the accounts view
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("AccountsView.fxml"));
 			AnchorPane anchor = (AnchorPane) loader.load();
@@ -75,6 +79,7 @@ public class MainApp extends Application
 			primaryStage.setHeight(550);
 			rootLayout.setCenter(anchor);
 			
+      // Setup the accounts controller
 			AccountsController controller = loader.getController();
 			controller.initAccounts(user, pass);
 			controller.setMainApp(this);
@@ -87,8 +92,8 @@ public class MainApp extends Application
 	
 	public Stage getPrimaryStage() 
 	{
-        return primaryStage;
-    }
+    return primaryStage;
+  }
 	
 	public static void main(String[] args) 
 	{

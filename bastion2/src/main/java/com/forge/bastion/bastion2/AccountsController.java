@@ -63,27 +63,29 @@ public class AccountsController
 	{
 		try 
 		{
+      // Display the create dialog
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("NewView.fxml"));
-	        AnchorPane page = (AnchorPane) loader.load();
-	        
-	        Stage dialogStage = new Stage();
-            dialogStage.setTitle("Create Account");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainApp.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-            
-            NewController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
+      AnchorPane page = (AnchorPane) loader.load();
+      
+      Stage dialogStage = new Stage();
+      dialogStage.setTitle("Create Account");
+      dialogStage.initModality(Modality.WINDOW_MODAL);
+      dialogStage.initOwner(mainApp.getPrimaryStage());
+      Scene scene = new Scene(page);
+      dialogStage.setScene(scene);
+      
+      NewController controller = loader.getController();
+      controller.setDialogStage(dialogStage);
 
-            dialogStage.showAndWait();
-            
-            if(controller.isOkClicked())
-            {
-            	algo.getAccountData().add(controller.createAccount());
-            	algo.updateFile();
-            }
+      dialogStage.showAndWait();
+      
+      // If account data entered, retrieve and save to file
+      if(controller.isOkClicked())
+      {
+        algo.getAccountData().add(controller.createAccount());
+        algo.updateFile();
+      }
 		}
 		catch(IOException e)
 		{
@@ -99,23 +101,25 @@ public class AccountsController
 			int selectedIndex = table.getSelectionModel().getSelectedIndex();
 			if(selectedIndex >= 0)
 			{
+        // Display the view dialog
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(MainApp.class.getResource("DataView.fxml"));
-		        AnchorPane page = (AnchorPane) loader.load();
-		        
-		        Stage dialogStage = new Stage();
-	            dialogStage.setTitle("View Account");
-	            dialogStage.initModality(Modality.WINDOW_MODAL);
-	            dialogStage.initOwner(mainApp.getPrimaryStage());
-	            Scene scene = new Scene(page);
-	            dialogStage.setScene(scene);
-	            
-	            DataController controller = loader.getController();
-	            controller.setDialogStage(dialogStage);
-	            
-	            controller.setAccount(algo.getAccountData().get(selectedIndex));
-	            
-	            dialogStage.showAndWait();
+        AnchorPane page = (AnchorPane) loader.load();
+        
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("View Account");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(mainApp.getPrimaryStage());
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+        
+        DataController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        
+        // Retrieve account data and display
+        controller.setAccount(algo.getAccountData().get(selectedIndex));
+        
+        dialogStage.showAndWait();
 			}
 		}
 		catch(IOException e)
@@ -132,34 +136,37 @@ public class AccountsController
 			int selectedIndex = table.getSelectionModel().getSelectedIndex();
 			if(selectedIndex >= 0)
 			{
+        // Display the edit dialog
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(MainApp.class.getResource("EditView.fxml"));
-		        AnchorPane page = (AnchorPane) loader.load();
-		        
-		        Stage dialogStage = new Stage();
-	            dialogStage.setTitle("Edit Account");
-	            dialogStage.initModality(Modality.WINDOW_MODAL);
-	            dialogStage.initOwner(mainApp.getPrimaryStage());
-	            Scene scene = new Scene(page);
-	            dialogStage.setScene(scene);
-	            
-	            EditController controller = loader.getController();
-	            controller.setDialogStage(dialogStage);
-	            
-	            Account current = algo.getAccountData().get(selectedIndex);
-	            controller.setAccount(current);
-	            
-	            dialogStage.showAndWait();
-	            
-	            if(controller.isOkClicked())
-	            {
-	            	Account newData = controller.editAccount();
-	            	current.setAccount(newData.getAccount());
-	            	current.setUsername(newData.getUsername());
-	            	current.setPassword(newData.getPassword());
-	            	
-	            	algo.updateFile();
-	            }
+        AnchorPane page = (AnchorPane) loader.load();
+        
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Edit Account");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(mainApp.getPrimaryStage());
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+        
+        EditController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        
+        // Retrieve the selected account data
+        Account current = algo.getAccountData().get(selectedIndex);
+        controller.setAccount(current);
+        
+        dialogStage.showAndWait();
+        
+        // If updates entered, retrieve and save in file
+        if(controller.isOkClicked())
+        {
+          Account newData = controller.editAccount();
+          current.setAccount(newData.getAccount());
+          current.setUsername(newData.getUsername());
+          current.setPassword(newData.getPassword());
+          
+          algo.updateFile();
+        }
 			}
 		}
 		catch(IOException e)
@@ -176,6 +183,7 @@ public class AccountsController
 		{
 			Account data = algo.getAccountData().get(selectedIndex);
 			
+      // Display a confirmation dialog for user to confirm deletion
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Delete Account");
 			alert.setHeaderText(data.getAccount() + " : " + data.getUsername());
@@ -186,6 +194,7 @@ public class AccountsController
 			{
 				table.getItems().remove(selectedIndex);
 				
+        // Update the account file
 				algo.updateFile();
 			}
 		}
@@ -199,14 +208,14 @@ public class AccountsController
 		
 		stage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() 
 		{
-			  @Override
-			  public void handle(KeyEvent evt) 
-			  {
-			     if(evt.getCode().equals(KeyCode.ESCAPE))
-			     {
-			        stage.close();
-			     }
-			  }
+      @Override
+      public void handle(KeyEvent evt) 
+      {
+        if(evt.getCode().equals(KeyCode.ESCAPE))
+        {
+          stage.close();
+        }
+      }
 		});
 		
 		table.setItems(algo.getAccountData());

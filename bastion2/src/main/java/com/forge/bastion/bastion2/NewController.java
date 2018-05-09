@@ -32,6 +32,7 @@ public class NewController {
 		
 	}
 	
+  // Check if new account data is valid
 	private boolean InputValid()
 	{
 		boolean status = (account.getText().length() > 0);
@@ -71,11 +72,11 @@ public class NewController {
 
 	public void setDialogStage(Stage dialogStage) 
 	{
-        this.dialogStage = dialogStage;
-    }
+    this.dialogStage = dialogStage;
+  }
 	
 	public boolean isOkClicked() 
 	{
-        return okClicked;
-    }
+    return okClicked;
+  }
 }

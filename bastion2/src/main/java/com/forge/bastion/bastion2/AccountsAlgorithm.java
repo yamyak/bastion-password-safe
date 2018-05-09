@@ -20,6 +20,7 @@ public class AccountsAlgorithm {
 	{
 	}
 	
+  // Encrypt the account data
 	private Account encryptAccount(String phrase, Account acc)
 	{
 		Account data = null;
@@ -39,14 +40,17 @@ public class AccountsAlgorithm {
 		
 		File accountFile = new File(username);
 		try 
-    	{
+    {
+      // Delete the old file and create a new one
 			if(accountFile.delete() && accountFile.createNewFile())
 			{
+        // Write the encrypted password
 				BufferedWriter bw = new BufferedWriter(new FileWriter(username));
 				String encrypt_pass = Crypter.encrypt(password, username);
 				bw.write(encrypt_pass);
 				bw.newLine();
 				
+        // For every account, encrypt and write the account data
 				for(int i = 0; i < accountList.size(); i++)
 				{
 					Account acc = accountList.get(i);
@@ -54,15 +58,15 @@ public class AccountsAlgorithm {
 					Account encrypt_acc = encryptAccount(password, acc);
 					bw.write(encrypt_acc.getAccount());
 					bw.newLine();
-			    	bw.write(encrypt_acc.getUsername());
-			    	bw.newLine();
-			    	bw.write(encrypt_acc.getPassword());
-			    	bw.newLine();
+          bw.write(encrypt_acc.getUsername());
+          bw.newLine();
+          bw.write(encrypt_acc.getPassword());
+          bw.newLine();
 				}
 				
 				bw.close();
-	    	}
-    	}
+      }
+    }
 		catch(Exception e)
 		{
 			e.printStackTrace();
@@ -77,6 +81,7 @@ public class AccountsAlgorithm {
 		this.password = pass;
 	}
 	
+  // Decrypt the account data
 	private Account decryptAccount(String phrase, String acc, String user, String pass)
 	{
 		Account data = null;
@@ -90,6 +95,7 @@ public class AccountsAlgorithm {
 		return data;
 	}
 	
+  // Read through the account file and decrypt each set of account data
 	public void loadAccountData()
 	{
 		String acc, user, pass;

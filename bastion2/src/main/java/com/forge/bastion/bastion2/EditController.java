@@ -32,6 +32,7 @@ public class EditController {
 		
 	}
 	
+  // Check if updated account data is valid
 	private boolean InputValid()
 	{
 		boolean status = (account.getText().length() > 0);
@@ -66,8 +67,8 @@ public class EditController {
 	
 	public void setDialogStage(Stage dialogStage) 
 	{
-        this.dialogStage = dialogStage;
-    }
+    this.dialogStage = dialogStage;
+  }
 	
 	public void setMainApp(MainApp mainApp)
 	{
@@ -76,8 +77,8 @@ public class EditController {
 	
 	public boolean isOkClicked() 
 	{
-        return okClicked;
-    }
+    return okClicked;
+  }
 	
 	public void setAccount(Account data)
 	{

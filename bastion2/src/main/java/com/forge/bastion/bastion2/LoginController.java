@@ -47,8 +47,10 @@ public class LoginController
 	{
 		boolean valid = false;
 		
+    // Check to see if the given username and password match an account
 		valid = algo.checkForAccount(username.getText(), password.getText());
 		
+    // If account found, display the accounts view
 		if(valid)
 		{
 			this.mainApp.showAccountsView(username.getText(), password.getText());	
@@ -68,8 +70,10 @@ public class LoginController
 	{
 		boolean success = false;
 		
+    // Create a new account with the given username and password
 		success = algo.createNewAccount(username.getText(), password.getText());
 		
+    // Show popup dialog of success/failure
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Account Creation");
